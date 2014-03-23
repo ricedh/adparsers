@@ -41,8 +41,8 @@ for file in os.listdir(path):
         for ad in transcribed_ads:
             for key in ad:
                 if len(ad[key]) < 2: ad[key] = '0' + ad[key]
-            paths = parse_url(ad['PERMALINK'])
-            new_file_name = 'TX_' + ad['YYYY'] + ad['MM'] + ad['DD'] + '_Telegraph_' + '-'.join(paths) + '.txt'
+            urlparts = parse_url(ad['PERMALINK'])
+            new_file_name = 'TX_' + ad['YYYY'] + ad['MM'] + ad['DD'] + '_Telegraph_' + '-'.join(urlparts) + '.txt'
             z.writestr(new_file_name, ad['TRANSCRIPTION'])
         f.close()
 
