@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
 import os, sys
+import datetime
 import csv
 import zipfile
 from urlparse import urlparse, parse_qs
@@ -31,7 +32,8 @@ def get_transcriptions_from_csv(fileobj):
         if 'TRANSCRIPTION' in cleaned_row: transcribed.append(cleaned_row)
     return transcribed
 
-outputfile = sys.argv[1] if len(sys.argv) > 1 else 'TelegraphAds'
+now = datetime.datetime.now()
+outputfile = sys.argv[1] if len(sys.argv) > 1 else 'runaway-ads-' + now.strftime('%Y%m%d-%H%M%S')
 z = zipfile.ZipFile(outputfile + '.zip', 'a')
 
 for file in os.listdir('.'):
