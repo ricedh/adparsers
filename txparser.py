@@ -1,6 +1,5 @@
 #!/usr/bin/python
 
-import argparse
 import os, sys
 import csv
 import zipfile
@@ -41,8 +40,8 @@ def month_no(month):
     else:
         return month
 
-outputfile = sys.argv[1] if sys.argv[1] else 'TelegraphAds'
-z = zipfile.ZipFile(sys.argv[1] + '.zip', 'a')
+outputfile = sys.argv[1] if len(sys.argv) > 1 else 'TelegraphAds'
+z = zipfile.ZipFile(outputfile + '.zip', 'a')
 
 for file in os.listdir('.'):
     if file.endswith('.csv'):
