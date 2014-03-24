@@ -31,15 +31,6 @@ def get_transcriptions_from_csv(fileobj):
         if 'TRANSCRIPTION' in cleaned_row: transcribed.append(cleaned_row)
     return transcribed
 
-def month_no(month):
-    """ Convert named month to month number with leading zero.
-    """
-    month_nos = {"January": "01", "February": "02", "March": "03", "April": "04", "May": "05", "June": "06", "July": "07", "August": "08", "September": "09", "October": "10", "November": "11", "December": "12"}
-    if month.isalpha() and month_nos[month]:
-        return month_nos[month]
-    else:
-        return month
-
 outputfile = sys.argv[1] if len(sys.argv) > 1 else 'TelegraphAds'
 z = zipfile.ZipFile(outputfile + '.zip', 'a')
 
