@@ -1,14 +1,10 @@
 #!/usr/bin/python
 
 import argparse
-import os
+import os, sys
 import csv
 import zipfile
 from urlparse import urlparse, parse_qs
-
-parser = argparse.ArgumentParser()
-parser.add_argument('zipname', help='Basename of output zipfile')
-sysargs = parser.parse_known_args()
 
 def parse_url(permalink):
     """ Take a permalink from the runaway ads spreadsheet, return list of
@@ -45,11 +41,12 @@ def month_no(month):
     else:
         return month
 
-z = zipfile.ZipFile(sysargs.zipname + '.zip', 'a')
+outputfile = sys.argv[1] if sys.argv[1] else 'TelegraphAds'
+z = zipfile.ZipFile(sys.argv[1] + '.zip', 'a')
 
 for file in os.listdir('.'):
     if file.endswith('.csv'):
-        f = open(path + '/' + file, 'rb')
+        f = open('./' + file, 'rb')
         transcribed_ads = get_transcriptions_from_csv(f)
         for ad in transcribed_ads:
             for key in ad:
