@@ -1,9 +1,14 @@
 #!/usr/bin/python
 
+import argparse
 import os
 import csv
 import zipfile
 from urlparse import urlparse, parse_qs
+
+parser = argparse.ArgumentParser()
+parser.add_argument('zipname', help='Basename of output zipfile')
+sysargs = parser.parse_known_args()
 
 def parse_url(permalink):
     """ Take a permalink from the runaway ads spreadsheet, return list of
@@ -31,10 +36,18 @@ def get_transcriptions_from_csv(fileobj):
         if 'TRANSCRIPTION' in cleaned_row: transcribed.append(cleaned_row)
     return transcribed
 
-path = '/Users/wcm1/Inbox/csv'
-z = zipfile.ZipFile('/Users/wcm1/Desktop/1836-1840.zip', 'a')
+def month_no(month):
+    """ Convert named month to month number with leading zero.
+    """
+    month_nos = {"January": "01", "February": "02", "March": "03", "April": "04", "May": "05", "June": "06", "July": "07", "August": "08", "September": "09", "October": "10", "November": "11", "December": "12"}
+    if month.isalpha() and month_nos[month]:
+        return month_nos[month]
+    else:
+        return month
 
-for file in os.listdir(path):
+z = zipfile.ZipFile(sysargs.zipname + '.zip', 'a')
+
+for file in os.listdir('.'):
     if file.endswith('.csv'):
         f = open(path + '/' + file, 'rb')
         transcribed_ads = get_transcriptions_from_csv(f)
