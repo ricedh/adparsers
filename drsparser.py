@@ -34,7 +34,7 @@ for eachFile in os.listdir(os.getcwd()+'/out/'):
 		# Get the first date into the new file name.
 		mo = dateRegex.search(top[0])
 		if mo:
-			if len(group(1)) == 1:
+			if len(mo.group(1)) == 1:
 				dayNum = "0" + mo.group(1)
 			else:
 				dayNum = mo.group(1)
@@ -56,6 +56,6 @@ for eachFile in os.listdir(os.getcwd()+'/out/'):
 					dayNum = "0" + otherMo.group(2)
 				else:
 					dayNum = otherMo.group(2)
-			newFileName += monthDict[otherMo.group(1)] + dayNum;
+				newFileName += monthDict[otherMo.group(1)] + dayNum;
 	os.rename(os.getcwd() + '/out/' + eachFile, os.getcwd() + '/out/' + newFileName + '.txt');
 
