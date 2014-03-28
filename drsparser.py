@@ -1,22 +1,28 @@
-#!/usr/bin/python
-import os, re
+import os, re, shutil
 
 dateRegex = re.compile('^(\d{1,2}) (\w+) (\d{4})'); # date regex with month in middle
-reverseDateRegex = re.compile('(\w+) (\d{1,2}) (\d{4})') # date regex starting with month
+reverseDateRegex = re.compile('(\w+) (\d{1,2}), (\d{4})') # date regex starting with month
 newsRegex = re.compile("(.*?)\s*\((.*?)\)"); # newspaper regex
 monthDict = {"January":"01","February":"02","March":"03","April":"04","May":"05", "June":"06", "July":"07",
 	"August":"08","September":"09","October":"10","November":"11","December":"12"}
 
+# Extend single-day date strings to appropriate size.
+def doubleDate (dateString):
+	if len(dateString) == 1:
+		return "0" + dateString;
+	return dateString;
+
 # Make a folder to store the new files.
-if 'out' not in os.listdir(os.getcwd()):
-	os.mkdir('out');
+if 'out' in os.listdir(os.getcwd()):
+	shutil.rmtree(os.getcwd() + '/out/');
+os.mkdir('out');
 fileNum = 0;
 
 # Split all files and write with generic names.
 with open('arkansas-test.txt', 'r') as f:
 	outfile = open('out/' + str(fileNum) + '.txt','w+')
 	for line in f:
-		mo = dateRegex.search(line) # date search
+		mo = dateRegex.search(line); # date search
 		if mo:
 			outfile.close();
 			fileNum += 1;
@@ -29,33 +35,32 @@ with open('arkansas-test.txt', 'r') as f:
 for eachFile in os.listdir(os.getcwd()+'/out/'):
 	newFileName = "AR_";
 	with open('out/'+eachFile, 'r') as oldFile:
-		top = [oldFile.next() for x in xrange(2)]
+		text = oldFile.readlines();
+		top = text[0:2];
 
 		# Get the first date into the new file name.
-		mo = dateRegex.search(top[0])
+		mo = dateRegex.search(top[0]);
 		if mo:
-			if len(mo.group(1)) == 1:
-				dayNum = "0" + mo.group(1)
-			else:
-				dayNum = mo.group(1)
-			newFileName += mo.group(3) + monthDict[mo.group(2)] + dayNum + "_"
+			dayNum = doubleDate(mo.group(1));
+			newFileName += mo.group(3) + monthDict[mo.group(2)] + dayNum + "_";
 
 		# Check if the notes are in the proper form.
-		if '[duplicate]' in top[1]:
-			newFileName += "UNPROCESSED"
-			continue;
+		if '[duplicate]' not in top[1]:
 
-		# Find the second date processes.
-		mo = newsRegex.search(top[1])
-		if mo:
-	 		newFileName = newFileName + mo.group(1).replace(" ", "-")
-	 		otherMo = reverseDateRegex.search(line)
- 			if otherMo:
-				newFileName = newFileName + otherMo.group(3);
-				if len(mo.group(2)) == 1:
-					dayNum = "0" + otherMo.group(2)
-				else:
-					dayNum = otherMo.group(2)
-				newFileName += monthDict[otherMo.group(1)] + dayNum;
-	os.rename(os.getcwd() + '/out/' + eachFile, os.getcwd() + '/out/' + newFileName + '.txt');
+			# Find the second date processes.
+			mo = newsRegex.search(top[1]);
+			if mo:
+	 			newFileName = newFileName + mo.group(1).replace(" ", "-") + "_";
+	 			otherMo = reverseDateRegex.search(top[1]);
+ 				if otherMo:
+					newFileName = newFileName + otherMo.group(3);
+					dayNum = doubleDate(otherMo.group(2));
+					newFileName += monthDict[otherMo.group(1)] + dayNum;
+		else:
+			newFileName += "UNPROCESSED";
+
+	# Rename the files, and rewrite without the first two lines. 
+	os.remove(os.getcwd() + '/out/' + eachFile); 
+	with open(os.getcwd() + '/out/' + newFileName + '.txt', 'w') as newFile:
+		newFile.writelines(text[2:]);
 
