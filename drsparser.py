@@ -1,4 +1,10 @@
-import os, re, shutil
+import os, re, shutil, sys
+
+#############################################################################
+# README: run from terminal in the following manner:
+#       UNIX:$ python adparser.py [input file name]
+# This script will create a subfolder called 'out' containing parsed notes.
+#############################################################################
 
 dateRegex = re.compile('^(\d{1,2}) (\w+) (\d{4})'); # date regex with month in middle
 reverseDateRegex = re.compile('(\w+) (\d{1,2}), (\d{4})') # date regex starting with month
@@ -19,7 +25,7 @@ os.mkdir('out');
 fileNum = 0;
 
 # Split all files and write with generic names.
-with open('arkansas-test.txt', 'r') as f:
+with open(sys.argv[1], 'r') as f:
 	outfile = open('out/' + str(fileNum) + '.txt','w+')
 	for line in f:
 		mo = dateRegex.search(line); # date search
