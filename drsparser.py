@@ -2,7 +2,7 @@ import os, re, shutil, sys
 
 #############################################################################
 # README: run from terminal in the following manner:
-#       UNIX:$ python adparser.py [input file name]
+#       UNIX:$ python adparser.py input_file_name
 # This script will create a subfolder called 'out' containing parsed notes.
 #############################################################################
 
