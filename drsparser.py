@@ -45,27 +45,26 @@ for eachFile in os.listdir(os.getcwd()+'/out/'):
 		text = oldFile.readlines();
 		top = text[0:2];
 
-		# Get the first date into the new file name.
-		mo = dateRegex.search(top[0]);
-		if mo:
-			dayNum = doubleDate(mo.group(1));
-			newFileName += mo.group(3) + monthDict[mo.group(2)] + dayNum + "_";
-
 		# Check if the notes are in the proper form.
 		if '[duplicate]' not in top[1]:
 
 			# Find the second date processes.
 			mo = newsRegex.search(top[1]);
 			if mo:
-	 			newFileName = newFileName + mo.group(1).replace(" ", "-") + "_";
 	 			otherMo = reverseDateRegex.search(top[1]);
  				if otherMo:
 					newFileName = newFileName + otherMo.group(3);
 					dayNum = doubleDate(otherMo.group(2));
-					newFileName += monthDict[otherMo.group(1)] + dayNum;
+					newFileName += monthDict[otherMo.group(1)] + dayNum + "_";
+	 			newFileName = newFileName + mo.group(1).replace(" ", "-") + "_";
 		else:
 			newFileName += "UNPROCESSED";
 
+		# Get the first date into the new file name.
+		mo = dateRegex.search(top[0]);
+		if mo:
+			dayNum = doubleDate(mo.group(1));
+			newFileName += mo.group(3) + monthDict[mo.group(2)] + dayNum;
 
 	# Rename the files, and rewrite without the first two lines. 
 	os.remove(os.getcwd() + '/out/' + eachFile); 
