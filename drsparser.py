@@ -1,16 +1,17 @@
+#!/usr/bin/python
+
 import os, re, shutil, sys
 
 #############################################################################
 # README: run from terminal in the following manner:
-#       UNIX:$ python adparser.py input_file_name
-# This script will create a subfolder called 'out' containing parsed notes.
+#       UNIX:$ python drsparser.py input_file_name
+# This script will create a subfolder called 'out' containing parsed ads.
 #############################################################################
 
-dateRegex = re.compile('^(\d{1,2}) (\w+) (\d{4})'); # date regex with month in middle
-reverseDateRegex = re.compile('(\w+) (\d{1,2}), (\d{4})') # date regex starting with month
+monthDict = {"January":"01","February":"02","March":"03","April":"04","May":"05", "June":"06", "July":"07", "August":"08","September":"09","October":"10","November":"11","December":"12"}
+dateRegex = re.compile('^(\d{1,2}) (%s) (\d{4})' % '|'.join(monthDict.keys())) # date regex with month in middle
+reverseDateRegex = re.compile('\((%s) (\d{1,2}), (\d{4})\)' % '|'.join(monthDict.keys())) # date regex starting with month
 newsRegex = re.compile("(.*?)\s*\((.*?)\)"); # newspaper regex
-monthDict = {"January":"01","February":"02","March":"03","April":"04","May":"05", "June":"06", "July":"07",
-	"August":"08","September":"09","October":"10","November":"11","December":"12"}
 
 # Extend single-day date strings to appropriate size.
 def doubleDate (dateString):
@@ -64,6 +65,7 @@ for eachFile in os.listdir(os.getcwd()+'/out/'):
 					newFileName += monthDict[otherMo.group(1)] + dayNum;
 		else:
 			newFileName += "UNPROCESSED";
+
 
 	# Rename the files, and rewrite without the first two lines. 
 	os.remove(os.getcwd() + '/out/' + eachFile); 
