@@ -19,7 +19,7 @@ def locations_tag(directory):
     for filename in os.listdir(directory):
         if filename.endswith(".txt"):
             with open(os.path.join(directory, filename), 'r') as f:
-                text = f.read()
+                text = f.read().replace('\n', ', ')
                 entities = tagger.get_entities(text)
                 if 'LOCATION' in entities:
                     locations[filename] = entities['LOCATION']
@@ -33,5 +33,6 @@ if __name__ == "__main__":
     if len(sys.argv[1:]):
         for directory in sys.argv[1:]:
             locations = locations_tag(directory)
+            print len(locations)
             with open(directory + '.json', 'w') as f:
                 f.write(json.dumps(locations))
