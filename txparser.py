@@ -45,7 +45,7 @@ for file in os.listdir('.'):
                 if len(ad[key]) < 2: ad[key] = '0' + ad[key]
             urlparts = parse_url(ad['PERMALINK'])
             new_file_name = 'TX_' + ad['YYYY'] + ad['MM'] + ad['DD'] + '_Telegraph_' + '-'.join(urlparts) + '.txt'
-            z.writestr(new_file_name, ad['TRANSCRIPTION'])
+            z.writestr(new_file_name, ad['TRANSCRIPTION'] + '\n\n')
         f.close()
 
 z.close()
