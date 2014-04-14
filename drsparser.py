@@ -40,7 +40,7 @@ with open(sys.argv[1], 'r') as f:
 
 # Rename each file appropriately.
 for eachFile in os.listdir(os.getcwd()+'/out/'):
-	newFileName = "AR_";
+	newFileName = "MS_";
 	with open('out/'+eachFile, 'r') as oldFile:
 		text = oldFile.readlines();
 		top = text[0:2];
@@ -68,6 +68,6 @@ for eachFile in os.listdir(os.getcwd()+'/out/'):
 
 	# Rename the files, and rewrite without the first two lines. 
 	os.remove(os.getcwd() + '/out/' + eachFile); 
-	with open(os.getcwd() + '/out/' + newFileName + '.txt', 'w') as newFile:
+	with open(os.getcwd() + '/out/' + newFileName + '-' + eachFile, 'w') as newFile:
 		newFile.writelines(text[2:]);
 
