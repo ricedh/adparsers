@@ -76,7 +76,12 @@ def main():
                 locs = json.loads(f.read())
             states = count_states(locs)
             with open(filename + '_states' + '.json', 'w') as f:
-                f.write(json.dumps(states))
+                f.write(json.dumps(
+                    states,
+                    indent=4,
+                    separators=(',', ': ')
+                    )
+                )
 
 if __name__ == "__main__":
     main()
