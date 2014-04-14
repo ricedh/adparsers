@@ -24,9 +24,9 @@ def count_states(ad_locs):
             state = address_to_state(address)
             if state:
                 mentions.add(state)
-            if mentions:
-                ad_states[ad] = list(mentions)  # Sets not JSON serializable
             time.sleep(0.01)    # Should be under google's rate limit
+        if mentions:
+            ad_states[ad] = list(mentions)  # Sets not JSON serializable
     return ad_states
 
 
