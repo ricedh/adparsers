@@ -6,6 +6,10 @@
 #
 #	chmod a+x countads.sh
 #
+# If you get a permissions error, try this, entering password when prompted:
+#
+#	sudo chmod a+x countads.sh
+#
 # Then, move the script to the directory with the ads you want to count.
 # To get the counts, execute this from that directory:
 #
