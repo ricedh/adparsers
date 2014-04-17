@@ -1,17 +1,9 @@
 #!/bin/bash
 
 # Use this script to get a chronological count of ads in a directory.
-# The first time you use the script, you need to execute this command
-# from the directory where you have downloaded the script:
-#
-#	chmod a+x countads.sh
-#
-# If you get a permissions error, try this, entering password when prompted:
-#
-#	sudo chmod a+x countads.sh
-#
-# Then, move the script to the directory with the ads you want to count.
-# To get the counts, execute this from that directory:
+# The script outputs a tabular count of ads by decade, year, and month.
+# Save or move the script to the directory with the ads you want to count.
+# Then, to get the counts, execute this from that directory:
 #
 #	./countads.sh
 #
@@ -22,6 +14,16 @@
 # You can then open that file in Microsoft Excel or a text editor.
 # Give the file a descriptive name to remind yourself of which ads where
 # in the directory that you were working with.
+#
+# If the above doesn't work, you may need to execute this command
+# from the directory where you have downloaded the script:
+#
+#	chmod a+x countads.sh
+#
+# If you get a permissions error, try this, entering password when prompted:
+#
+#	sudo chmod a+x countads.sh
+#
 
 echo -e " \t "
 
