@@ -25,6 +25,8 @@
 #	sudo chmod a+x countads.sh
 #
 
+echo -e "TOTAL\t`ls | wc -l | tr -d ' '` "
+
 echo -e " \t "
 
 DEC=3
