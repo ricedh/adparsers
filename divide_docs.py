@@ -4,13 +4,25 @@ import sys
 import csv
 import zipfile
 
+# Usage:
+#
 # Script requires three arguments at the command line.  The first should be
 # a tab-delimited file produced by Mallet with --output-doc-topics.  The second
 # and third arguments, separated by spaces, should be the numbers of the topics
-# you want to use to divide the documents into two groups. The script outputs
-# two new tab-delimited files: one containing documents more associated with
-# the first topic than the second, and the other containing documents more
-# associated with the second than the first.
+# you want to use to divide the documents into two groups.
+#
+# Put this script in the same directory containing the doc-topics file created
+# by MALLET. Then run this command from within that directory:
+#
+#     ./divide_docs.py doc-topics-file.txt 1 7
+#
+# where doc-topics-file.txt is the name of the file created by MALLET and the
+# two numbers are the numbers of the topics (found in the topics key file output
+# by MALLET) that you want to use to divide the docs.
+# 
+# The script outputs two new tab-delimited files: one containing documents more
+# associated with the first topic than the second, and the other containing
+# documents more associated with the second than the first.
 
 f = open(sys.argv[1], 'rbU')
 reader = csv.reader(f, delimiter='\t')
