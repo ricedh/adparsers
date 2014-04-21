@@ -10,11 +10,11 @@ while True:
 
 	# Help documentation.
 	if ('HELP' in var):
-		print("Supported functions include:\n - ADD_DOCUMENT(inDoc)");
+		print("Supported functions include:\n - ADD_DOCUMENT(inDoc)\n - ADD_DIRECTORY(inDir)\n");
 
 	elif ('ADD_DIRECTORY' in var):
 		# If the input argument is a directory, parse each file into the score object.
-		if (os.path.isdir(sys.argv[1]) or os.path.isdir(os.getcwd()+'/'+sys.argv[1])):
+		if (os.path.isdir(var[1]) or os.path.isdir(os.getcwd()+'/'+var[1])):
 			for filename in os.listdir(os.getcwd()):
 				if filename.endswith(".txt"):
 					list_of_words = [];
